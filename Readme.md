@@ -1,7 +1,7 @@
 # Проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Arthur Litovko](https://up.htmlacademy.ru/ecmascript/13/user/6927).
-* Наставник: `Неизвестно`.
+* Наставник: [Жора Милевский](https://htmlacademy.ru/profile/id366911)
 
 ---
 
