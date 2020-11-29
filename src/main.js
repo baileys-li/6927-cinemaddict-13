@@ -42,16 +42,14 @@ render(siteFilmSection, createFilmsList(allMovies));
 render(siteFilmSection, createFilmsList(topMovies));
 render(siteFilmSection, createFilmsList(mostCommentedMovies));
 
-
-
-const films = siteFilmSection.querySelectorAll('.film-card');
-films.forEach(film => {
+const films = siteFilmSection.querySelectorAll(`.film-card`);
+films.forEach((film) => {
   film.style.cursor = `pointer`;
   film.addEventListener(`click`, () => {
     body.classList.add(`hide-overflow`);
-    render(body, createFilmDetails())
-  })
-})
+    render(body, createFilmDetails());
+  });
+});
 
 const siteFooterElement = body.querySelector(`.footer`);
 render(siteFooterElement, createFooterStatistics());

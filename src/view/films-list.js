@@ -4,7 +4,7 @@ import {createShowMore} from "./show-more-button";
 export const createFilmsList = (list) => {
   const sectionExtraClass = list.isExtra ? `films-list--extra` : ``;
   const headlineExtraClass = list.isExtra ? `` : `visually-hidden`;
-  const showMoreBtn =  list.isExtra ? `` : createShowMore();
+  const showMoreBtn = list.isExtra ? `` : createShowMore();
 
   let films = ``;
 
