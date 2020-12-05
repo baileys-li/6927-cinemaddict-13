@@ -43,17 +43,30 @@ render(siteFilmSection, createFilmsList(topMovies));
 render(siteFilmSection, createFilmsList(mostCommentedMovies));
 
 const films = siteFilmSection.querySelectorAll(`.film-card`);
+
 films.forEach((film) => {
   film.style.cursor = `pointer`;
   film.addEventListener(`click`, () => {
     body.classList.add(`hide-overflow`);
     render(body, createFilmDetails());
+    const filmDetail = document.querySelector(`.film-details`);
+    const closeButton = filmDetail.querySelector(`.film-details__close-btn`);
+
+    closeButton.addEventListener(`click`, closePopup);
+
+    document.addEventListener(`keydown`, (evt) => {
+      if (evt.key === "Escape" || evt.key === "Esc") {
+        evt.preventDefault();
+        closePopup();
+      }
+    });
+
+    function closePopup() {
+      filmDetail.remove();
+      body.classList.remove(`hide-overflow`);
+    }
   });
 });
 
 const siteFooterElement = body.querySelector(`.footer`);
 render(siteFooterElement, createFooterStatistics());
-
-
-
-
