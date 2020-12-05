@@ -1,9 +1,9 @@
 import { returnRandomItem } from "../utils/returnRandomItem";
 import { generateLoremIpsum } from "../utils/generateLoremIpsum";
 import { getRandomInteger } from "../utils/getRandomInteger";
+import { EMOJI } from "../const";
 import dayjs from "dayjs";
 
-const EMOJI = [`angry`, `puke`, `sleeping`, `smile`];
 const NAMES = [
   "Tim Macoveev",
   `John Doe`,

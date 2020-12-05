@@ -12,7 +12,6 @@ export const createFilmComment = () => {
       return dayjs(date).format(`YYYY/M/D H:m`);
     } else {
       const monthDiff = formatDate.diff(currentDate, "month");
-      console.log(`Month diff: ${monthDiff}`);
       if (monthDiff >= 1) {
         return `${formatDate.diff(currentDate, "month")} months ago`;
       } else {
