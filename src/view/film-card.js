@@ -1,4 +1,4 @@
-export const createFilmCard = ({title, poster, description, comments}) => {
+export const createFilmCard = ({title, poster, description, commentsCount}) => {
   return `<article class="film-card">
   <h3 class="film-card__title">${title}</h3>
   <p class="film-card__rating">8.9</p>
@@ -9,7 +9,7 @@ export const createFilmCard = ({title, poster, description, comments}) => {
   </p>
   <img src="./images/posters/${poster}" alt="Poster of '${title}'" class="film-card__poster">
   <p class="film-card__description">${description}</p>
-  <a class="film-card__comments">${comments.length} comments</a>
+  <a class="film-card__comments">${commentsCount} comments</a>
   <div class="film-card__controls">
     <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist" type="button">Add to watchlist</button>
     <button class="film-card__controls-item button film-card__controls-item--mark-as-watched" type="button">Mark as watched</button>
