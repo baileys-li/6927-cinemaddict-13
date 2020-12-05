@@ -14,9 +14,8 @@ const NAMES = [
 
 const generateDate = () => {
   const UNIT = [`hour`, `day`, `week`, `month`, `quarter`, `year`];
-  const selectedUnit = generateLoremIpsum[UNIT];
+  const selectedUnit = returnRandomItem(UNIT);
   const gap = getRandomInteger(0, 5);
-
   return dayjs().subtract(gap, selectedUnit).toDate();
 };
 
