@@ -23,11 +23,8 @@ const MOVIE_POSTERS = [
 ];
 
 const generateComments = () => {
-  const numberOfComments = getRandomInteger(0, 5);
-  let comments = [];
-  for (let index = 0; index < numberOfComments; index++) {
-    comments.push(generateComment());
-  }
+  const COMMENT_COUNT = getRandomInteger(0, 5);
+  let comments = new Array(COMMENT_COUNT).fill().map(generateComment);
   return comments;
 };
 

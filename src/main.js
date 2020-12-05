@@ -1,11 +1,13 @@
-import {createHeaderProfile} from "./view/header-profile";
-import {createMainNavigation} from "./view/main-navigation";
-import {createSortFilters} from "./view/sort-filters";
-import {createFilmsSection} from "./view/films-section";
-import {createFilmsList} from "./view/films-list";
-import {createFilmDetails} from "./view/film-details";
+import { createHeaderProfile } from "./view/header-profile";
+import { createMainNavigation } from "./view/main-navigation";
+import { createSortFilters } from "./view/sort-filters";
+import { createFilmsSection } from "./view/films-section";
+import { createFilmsList } from "./view/films-list";
+import { createFilmDetails } from "./view/film-details";
+import { generateMovie } from "./mock/movie";
+import { getRandomInteger } from "./utils/getRandomInteger";
 
-import {createFooterStatistics} from "./view/footer-statistics";
+import { createFooterStatistics } from "./view/footer-statistics";
 
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
@@ -19,6 +21,10 @@ const siteMainElement = document.querySelector(`.main`);
 render(siteMainElement, createMainNavigation(), `afterbegin`);
 render(siteMainElement, createSortFilters());
 render(siteMainElement, createFilmsSection());
+
+const MOVIE_COUNT = getRandomInteger(15, 20);
+
+const movies = new Array(MOVIE_COUNT).fill().map(generateMovie);
 
 
 const siteFilmSection = body.querySelector(`.films`);
@@ -53,3 +59,7 @@ films.forEach((film) => {
 
 const siteFooterElement = body.querySelector(`.footer`);
 render(siteFooterElement, createFooterStatistics());
+
+
+
+
