@@ -1,15 +1,18 @@
 import {createFilmCard} from "./film-card";
 import {createShowMore} from "./show-more-button";
+import { generateMovie } from "../mock/movie";
+
 
 export const createFilmsList = (list) => {
+  const movies = new Array(list.filmsNumber).fill().map(generateMovie);
+
   const sectionExtraClass = list.isExtra ? `films-list--extra` : ``;
   const headlineExtraClass = list.isExtra ? `` : `visually-hidden`;
   const showMoreBtn = list.isExtra ? `` : createShowMore();
 
   let films = ``;
-
   for (let index = 0; index < list.filmsNumber; index++) {
-    films += createFilmCard();
+    films += createFilmCard(movies[index]);
   }
 
   return `<section class="films-list ${sectionExtraClass}">

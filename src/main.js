@@ -4,7 +4,6 @@ import { createSortFilters } from "./view/sort-filters";
 import { createFilmsSection } from "./view/films-section";
 import { createFilmsList } from "./view/films-list";
 import { createFilmDetails } from "./view/film-details";
-import { generateMovie } from "./mock/movie";
 import { getRandomInteger } from "./utils/getRandomInteger";
 
 import { createFooterStatistics } from "./view/footer-statistics";
@@ -22,16 +21,11 @@ render(siteMainElement, createMainNavigation(), `afterbegin`);
 render(siteMainElement, createSortFilters());
 render(siteMainElement, createFilmsSection());
 
-const MOVIE_COUNT = getRandomInteger(15, 20);
-
-const movies = new Array(MOVIE_COUNT).fill().map(generateMovie);
-
-
 const siteFilmSection = body.querySelector(`.films`);
 const allMovies = {
   headline: `All movies. Upcoming`,
   isExtra: false,
-  filmsNumber: 5,
+  filmsNumber: getRandomInteger(15, 20),
 };
 const topMovies = {
   headline: `Top rated`,

@@ -32,7 +32,7 @@ export const generateMovie = () => {
   return {
     title: returnRandomItem(MOVIE_TITLES),
     poster: returnRandomItem(MOVIE_POSTERS),
-    descriptions: generateLoremIpsum(),
+    description: generateLoremIpsum(),
     comments: generateComments(),
   };
 };
