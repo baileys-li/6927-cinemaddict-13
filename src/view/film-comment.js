@@ -5,22 +5,36 @@ export const createFilmComment = () => {
   const { author, date, emoji, message } = generateComment();
 
   const returnFormattedDate = () => {
-    const formatDate = dayjs(date);
+    const formattedDate = dayjs(date);
     const currentDate = dayjs();
-    const yearDiff = formatDate.diff(currentDate, "year");
-    if (yearDiff >= 1) {
-      return dayjs(date).format(`YYYY/M/D H:m`);
-    } else {
-      const monthDiff = formatDate.diff(currentDate, "month");
-      if (monthDiff >= 1) {
-        return `${formatDate.diff(currentDate, "month")} months ago`;
-      } else {
-        const dayDiff = formatDate.diff(currentDate, "month");
-        if (dayDiff >= 1) {
-          return `${dayDiff} days ago`;
-        } else {
-          return `Today`;
-        }
+
+    const TIME_UNIT = [`year`, `month`, `day`];
+    let output = false;
+
+    TIME_UNIT.forEach((timeUnit) => {
+      if (!output) {
+        output = checkDiff(timeUnit);
+      }
+    });
+
+    return output;
+
+    function checkDiff(timeUnit) {
+      const difference = currentDate.diff(formattedDate, timeUnit);
+      switch (difference) {
+        case 1:
+          return `1 ${timeUnit} ago`;
+          break;
+
+        case 0:
+          return timeUnit === `day` ? `Today` : false;
+          break;
+
+        default:
+          return timeUnit === `year`
+            ? dayjs(date).format(`YYYY/M/D H:m`)
+            : `${difference} ${timeUnit}s ago`;
+          break;
       }
     }
   };
