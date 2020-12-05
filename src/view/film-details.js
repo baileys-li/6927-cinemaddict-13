@@ -2,8 +2,8 @@ import { generateMovie } from "../mock/movie";
 import { createFilmComments } from "./film-comments";
 import { EMOJI } from "../const";
 
-export const createFilmDetails = () => {
-  const { title, poster, description, commentsCount } = generateMovie();
+export const createFilmDetails = (movie) => {
+  const { title, poster, description, commentsCount, rating, year } = movie;
   const comments = createFilmComments(commentsCount);
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
@@ -26,7 +26,7 @@ export const createFilmDetails = () => {
             </div>
 
             <div class="film-details__rating">
-              <p class="film-details__total-rating">8.9</p>
+              <p class="film-details__total-rating">${rating}</p>
             </div>
           </div>
 
@@ -45,7 +45,7 @@ export const createFilmDetails = () => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">30 March 1945</td>
+              <td class="film-details__cell">30 March ${year}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>

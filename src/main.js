@@ -4,13 +4,12 @@ import { createSortFilters } from "./view/sort-filters";
 import { createFilmsSection } from "./view/films-section";
 import { createFilmsList } from "./view/films-list";
 import { createFilmDetails } from "./view/film-details";
-import { getRandomInteger } from "./utils";
-
 import { createFooterStatistics } from "./view/footer-statistics";
+import { createFilmCard } from "./view/film-card";
 
-const render = (container, template, place = `beforeend`) => {
-  container.insertAdjacentHTML(place, template);
-};
+import { generateMovie } from "./mock/movie";
+
+import { render } from "./utils";
 
 const body = document.body;
 const siteHeaderElement = body.querySelector(`.header`);
@@ -21,11 +20,16 @@ render(siteMainElement, createMainNavigation(), `afterbegin`);
 render(siteMainElement, createSortFilters());
 render(siteMainElement, createFilmsSection());
 
+const MOVIE_COUNT = 18;
+const MOVIE_COUNT_PER_STEP = 5;
+
+const movies = new Array(MOVIE_COUNT).fill().map(generateMovie);
+
 const siteFilmSection = body.querySelector(`.films`);
 const allMovies = {
   headline: `All movies. Upcoming`,
   isExtra: false,
-  filmsNumber: getRandomInteger(15, 20),
+  filmsNumber: MOVIE_COUNT_PER_STEP,
 };
 const topMovies = {
   headline: `Top rated`,
@@ -38,17 +42,35 @@ const mostCommentedMovies = {
   filmsNumber: 2,
 };
 
-render(siteFilmSection, createFilmsList(allMovies));
-render(siteFilmSection, createFilmsList(topMovies));
-render(siteFilmSection, createFilmsList(mostCommentedMovies));
+render(siteFilmSection, createFilmsList(allMovies, movies));
+render(siteFilmSection, createFilmsList(topMovies, movies));
+render(siteFilmSection, createFilmsList(mostCommentedMovies, movies));
+
+const showMoreBtn = siteFilmSection.querySelector(`.films-list__show-more`);
+const allMoviesList = showMoreBtn.previousElementSibling;
+
+showMoreBtn.addEventListener(`click`, (evt) => {
+  evt.preventDefault();
+
+  const currentMoviesCount = allMoviesList.childElementCount;
+
+  let loopEnd = currentMoviesCount + MOVIE_COUNT_PER_STEP;
+
+  if (loopEnd >= MOVIE_COUNT) {
+    loopEnd = MOVIE_COUNT;
+    showMoreBtn.remove();
+  }
+  for (let index = currentMoviesCount; index < loopEnd; index++) {
+    render(allMoviesList, createFilmCard(movies[index]));
+  }
+});
 
 const films = siteFilmSection.querySelectorAll(`.film-card`);
-
 films.forEach((film) => {
   film.style.cursor = `pointer`;
   film.addEventListener(`click`, () => {
     body.classList.add(`hide-overflow`);
-    render(body, createFilmDetails());
+    render(body, createFilmDetails(movies[0]));
     const filmDetail = document.querySelector(`.film-details`);
     const closeButton = filmDetail.querySelector(`.film-details__close-btn`);
 

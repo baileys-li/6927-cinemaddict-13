@@ -29,5 +29,7 @@ export const generateMovie = () => {
     poster: returnRandomItem(MOVIE_POSTERS),
     description: generateLoremIpsum(),
     commentsCount: getRandomInteger(0, 5),
+    rating: getRandomInteger(0, 100) / 10,
+    year: getRandomInteger(1920, 2020),
   };
 };
