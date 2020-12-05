@@ -4,7 +4,7 @@ import { createSortFilters } from "./view/sort-filters";
 import { createFilmsSection } from "./view/films-section";
 import { createFilmsList } from "./view/films-list";
 import { createFilmDetails } from "./view/film-details";
-import { getRandomInteger } from "./utils/getRandomInteger";
+import { getRandomInteger } from "./utils";
 
 import { createFooterStatistics } from "./view/footer-statistics";
 

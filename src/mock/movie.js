@@ -1,6 +1,8 @@
-import { returnRandomItem } from "../utils/returnRandomItem";
-import { generateLoremIpsum } from "../utils/generateLoremIpsum";
-import { getRandomInteger } from "../utils/getRandomInteger";
+import {
+  generateLoremIpsum,
+  returnRandomItem,
+  getRandomInteger,
+} from "../utils";
 
 const MOVIE_TITLES = [
   `The Dance of Life`,
@@ -20,7 +22,6 @@ const MOVIE_POSTERS = [
   `the-great-flamarion.jpg`,
   `the-man-with-the-golden-arm.jpg`,
 ];
-
 
 export const generateMovie = () => {
   return {
