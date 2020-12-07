@@ -1,8 +1,8 @@
-import { capitalize } from "../utils";
+import {capitalize} from "../utils";
 
 export const createMainNavigation = (filters) => {
   const filtersMarkup = filters
-    .map((filters) => createFilterMarkup(filters))
+    .map((filter) => createFilterMarkup(filter))
     .join(``);
 
   return `<nav class="main-navigation">
@@ -15,6 +15,6 @@ export const createMainNavigation = (filters) => {
 };
 
 const createFilterMarkup = (filter) => {
-  const { name, count } = filter;
+  const {name, count} = filter;
   return `<a href="#${name}" class="main-navigation__item">${capitalize(name)} <span class="main-navigation__item-count">${count}</span></a>`;
 };

@@ -36,6 +36,5 @@ export const render = (container, template, place = `beforeend`) => {
 };
 
 export const capitalize = (string) => {
-  if (typeof string !== "string") return "";
-  return string[0].toUpperCase() + string.slice(1);
+  return typeof string === `string` ? string[0].toUpperCase() + string.slice(1) : ``;
 };

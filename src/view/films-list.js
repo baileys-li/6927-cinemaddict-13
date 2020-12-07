@@ -1,6 +1,5 @@
-import { createFilmCard } from "./film-card";
-import { createShowMore } from "./show-more-button";
-import { generateMovie } from "../mock/movie";
+import {createFilmCard} from "./film-card";
+import {createShowMore} from "./show-more-button";
 
 export const createFilmsList = (list, movies) => {
   const sectionExtraClass = list.isExtra ? `films-list--extra` : ``;

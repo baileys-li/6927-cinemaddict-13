@@ -1,14 +1,10 @@
-import {
-  generateLoremIpsum,
-  returnRandomItem,
-  getRandomInteger,
-} from "../utils";
+import {generateLoremIpsum, returnRandomItem, getRandomInteger} from "../utils";
 
-import { EMOJI } from "../const";
+import {EMOJI} from "../const";
 import dayjs from "dayjs";
 
 const NAMES = [
-  "Tim Macoveev",
+  `Tim Macoveev`,
   `John Doe`,
   `Jane Doe`,
   `Вася Пупкин`,

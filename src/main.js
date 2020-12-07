@@ -1,16 +1,16 @@
-import { createHeaderProfile } from "./view/header-profile";
-import { createMainNavigation } from "./view/main-navigation";
-import { createSortFilters } from "./view/sort-filters";
-import { createFilmsSection } from "./view/films-section";
-import { createFilmsList } from "./view/films-list";
-import { createFilmDetails } from "./view/film-details";
-import { createFooterStatistics } from "./view/footer-statistics";
-import { createFilmCard } from "./view/film-card";
+import {createHeaderProfile} from "./view/header-profile";
+import {createMainNavigation} from "./view/main-navigation";
+import {createSortFilters} from "./view/sort-filters";
+import {createFilmsSection} from "./view/films-section";
+import {createFilmsList} from "./view/films-list";
+import {createFilmDetails} from "./view/film-details";
+import {createFooterStatistics} from "./view/footer-statistics";
+import {createFilmCard} from "./view/film-card";
 
-import { generateMovie } from "./mock/movie";
-import { generateFilter } from "./mock/filters";
+import {generateMovie} from "./mock/movie";
+import {generateFilter} from "./mock/filters";
 
-import { render } from "./utils";
+import {render} from "./utils";
 
 const body = document.body;
 const siteHeaderElement = body.querySelector(`.header`);
@@ -80,7 +80,7 @@ films.forEach((film) => {
     closeButton.addEventListener(`click`, closePopup);
 
     document.addEventListener(`keydown`, (evt) => {
-      if (evt.key === "Escape" || evt.key === "Esc") {
+      if (evt.key === `Escape` || evt.key === `Esc`) {
         evt.preventDefault();
         closePopup();
       }

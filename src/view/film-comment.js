@@ -1,8 +1,8 @@
-import { generateComment } from "../mock/comment";
+import {generateComment} from "../mock/comment";
 import dayjs from "dayjs";
 
 export const createFilmComment = () => {
-  const { author, date, emoji, message } = generateComment();
+  const {author, date, emoji, message} = generateComment();
   const dateText = formatDate(date);
 
   return `<li class="film-details__comment">
@@ -40,17 +40,14 @@ const formatDate = (date) => {
     switch (difference) {
       case 1:
         return `1 ${timeUnit} ago`;
-        break;
 
       case 0:
         return timeUnit === `day` ? `Today` : false;
-        break;
 
       default:
         return timeUnit === `year`
           ? dayjs(date).format(`YYYY/M/D H:m`)
           : `${difference} ${timeUnit}s ago`;
-        break;
     }
   }
 };

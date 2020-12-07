@@ -1,4 +1,4 @@
-import { createFilmComment } from "./film-comment";
+import {createFilmComment} from "./film-comment";
 
 export const createFilmComments = (count) => {
   let comments = ``;

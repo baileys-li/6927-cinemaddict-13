@@ -1,5 +1,5 @@
 export const createFilmCard = (movie) => {
-  const { title, poster, description, commentsCount, rating, year } = movie;
+  const {title, poster, description, commentsCount, rating, year} = movie;
   return `<article class="film-card">
   <h3 class="film-card__title">${title}</h3>
   <p class="film-card__rating">${rating}</p>

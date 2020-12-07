@@ -1,9 +1,8 @@
-import { generateMovie } from "../mock/movie";
-import { createFilmComments } from "./film-comments";
-import { EMOJI } from "../const";
+import {createFilmComments} from "./film-comments";
+import {EMOJI} from "../const";
 
 export const createFilmDetails = (movie) => {
-  const { title, poster, description, commentsCount, rating, year } = movie;
+  const {title, poster, description, commentsCount, rating, year} = movie;
   const comments = createFilmComments(commentsCount);
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
@@ -103,10 +102,7 @@ export const createFilmDetails = (movie) => {
 };
 
 const createEmojiList = () => {
-  return EMOJI.map(
-    (
-      emoji
-    ) => `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="${emoji}">
+  return EMOJI.map((emoji) => `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="${emoji}">
     <label class="film-details__emoji-label" for="emoji-${emoji}">
       <img src="./images/emoji/${emoji}.png" width="30" height="30" alt="emoji">
     </label>`
