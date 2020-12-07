@@ -34,3 +34,8 @@ export const generateLoremIpsum = () => {
 export const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
+
+export const capitalize = (string) => {
+  if (typeof string !== "string") return "";
+  return string[0].toUpperCase() + string.slice(1);
+};

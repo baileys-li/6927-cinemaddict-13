@@ -8,6 +8,7 @@ import { createFooterStatistics } from "./view/footer-statistics";
 import { createFilmCard } from "./view/film-card";
 
 import { generateMovie } from "./mock/movie";
+import { generateFilter } from "./mock/filters";
 
 import { render } from "./utils";
 
@@ -15,15 +16,17 @@ const body = document.body;
 const siteHeaderElement = body.querySelector(`.header`);
 render(siteHeaderElement, createHeaderProfile());
 
-const siteMainElement = document.querySelector(`.main`);
-render(siteMainElement, createMainNavigation(), `afterbegin`);
-render(siteMainElement, createSortFilters());
-render(siteMainElement, createFilmsSection());
-
 const MOVIE_COUNT = 18;
 const MOVIE_COUNT_PER_STEP = 5;
 
 const movies = new Array(MOVIE_COUNT).fill().map(generateMovie);
+const filters = generateFilter(movies);
+
+
+const siteMainElement = document.querySelector(`.main`);
+render(siteMainElement, createMainNavigation(filters), `afterbegin`);
+render(siteMainElement, createSortFilters());
+render(siteMainElement, createFilmsSection());
 
 const siteFilmSection = body.querySelector(`.films`);
 const allMovies = {

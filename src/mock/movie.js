@@ -31,5 +31,9 @@ export const generateMovie = () => {
     commentsCount: getRandomInteger(0, 5),
     rating: getRandomInteger(0, 100) / 10,
     year: getRandomInteger(1920, 2020),
+
+    isInWatchlist: Boolean(getRandomInteger(0, 1)),
+    isWatched: Boolean(getRandomInteger(0, 1)),
+    isFavorite: Boolean(getRandomInteger(0, 1)),
   };
 };
