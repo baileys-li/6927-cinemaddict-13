@@ -94,4 +94,4 @@ films.forEach((film) => {
 });
 
 const siteFooterElement = body.querySelector(`.footer`);
-render(siteFooterElement, createFooterStatistics());
+render(siteFooterElement, createFooterStatistics(MOVIE_COUNT));
