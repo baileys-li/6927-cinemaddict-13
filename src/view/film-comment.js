@@ -1,8 +1,7 @@
-import {generateComment} from "../mock/comment";
 import dayjs from "dayjs";
 
-export const createFilmComment = () => {
-  const {author, date, emoji, message} = generateComment();
+export const createFilmComment = (comment) => {
+  const {author, date, emoji, message} = comment;
   const dateText = formatDate(date);
 
   return `<li class="film-details__comment">
