@@ -2,6 +2,7 @@ import {
   generateLoremIpsum,
   returnRandomItem,
   getRandomInteger,
+  getRandomBoolean
 } from "../utils";
 
 const MOVIE_TITLES = [
@@ -32,8 +33,8 @@ export const generateMovie = () => {
     rating: getRandomInteger(0, 100) / 10,
     year: getRandomInteger(1920, 2020),
 
-    isInWatchlist: Boolean(getRandomInteger(0, 1)),
-    isWatched: Boolean(getRandomInteger(0, 1)),
-    isFavorite: Boolean(getRandomInteger(0, 1)),
+    isInWatchlist: getRandomBoolean(),
+    isWatched: getRandomBoolean(),
+    isFavorite: getRandomBoolean(),
   };
 };

@@ -9,6 +9,8 @@ export const returnRandomItem = (array) => {
   return array[randomIndex];
 };
 
+export const getRandomBoolean = () => Boolean(getRandomInteger(0, 1));
+
 const LOREM_SENTENCES = [
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
   `Cras aliquet varius magna, non porta ligula feugiat eget.`,
@@ -36,5 +38,7 @@ export const render = (container, template, place = `beforeend`) => {
 };
 
 export const capitalize = (string) => {
-  return typeof string === `string` ? string[0].toUpperCase() + string.slice(1) : ``;
+  return typeof string === `string`
+    ? string[0].toUpperCase() + string.slice(1)
+    : ``;
 };

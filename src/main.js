@@ -12,12 +12,11 @@ import {generateFilter} from "./mock/filters";
 
 import {render} from "./utils";
 
+import {MOVIE_COUNT, MOVIE_COUNT_PER_STEP} from "./const";
+
 const body = document.body;
 const siteHeaderElement = body.querySelector(`.header`);
 render(siteHeaderElement, createHeaderProfile());
-
-const MOVIE_COUNT = 18;
-const MOVIE_COUNT_PER_STEP = 5;
 
 const movies = new Array(MOVIE_COUNT).fill().map(generateMovie);
 const filters = generateFilter(movies);
