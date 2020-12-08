@@ -1,4 +1,4 @@
-import {createHeaderProfile} from "./view/header-profile";
+import "./view/header-profile";
 import {createMainNavigation} from "./view/main-navigation";
 import {createSortFilters} from "./view/sort-filters";
 import {createFilmsSection} from "./view/films-section";
@@ -10,21 +10,23 @@ import {createFilmCard} from "./view/film-card";
 import {generateMovie} from "./mock/movie";
 import {generateFilter} from "./mock/filters";
 
-import {render} from "./utils";
+import {renderElement, renderTemplate} from "./utils";
 
 import {MOVIE_COUNT, MOVIE_COUNT_PER_STEP} from "./const";
+import HeaderProfile from "./view/header-profile";
 
 const body = document.body;
 const siteHeaderElement = body.querySelector(`.header`);
-render(siteHeaderElement, createHeaderProfile());
+renderElement(siteHeaderElement, new HeaderProfile().getElement());
 
 const movies = new Array(MOVIE_COUNT).fill().map(generateMovie);
 const filters = generateFilter(movies);
 
+
 const siteMainElement = document.querySelector(`.main`);
-render(siteMainElement, createMainNavigation(filters), `afterbegin`);
-render(siteMainElement, createSortFilters());
-render(siteMainElement, createFilmsSection());
+renderTemplate(siteMainElement, createMainNavigation(filters), `afterbegin`);
+renderTemplate(siteMainElement, createSortFilters());
+renderTemplate(siteMainElement, createFilmsSection());
 
 const siteFilmSection = body.querySelector(`.films`);
 const allMovies = {
@@ -43,9 +45,9 @@ const mostCommentedMovies = {
   filmsNumber: 2,
 };
 
-render(siteFilmSection, createFilmsList(allMovies, movies));
-render(siteFilmSection, createFilmsList(topMovies, movies));
-render(siteFilmSection, createFilmsList(mostCommentedMovies, movies));
+renderTemplate(siteFilmSection, createFilmsList(allMovies, movies));
+renderTemplate(siteFilmSection, createFilmsList(topMovies, movies));
+renderTemplate(siteFilmSection, createFilmsList(mostCommentedMovies, movies));
 
 const showMoreBtn = siteFilmSection.querySelector(`.films-list__show-more`);
 const allMoviesList = showMoreBtn.previousElementSibling;
@@ -62,7 +64,7 @@ showMoreBtn.addEventListener(`click`, (evt) => {
     showMoreBtn.remove();
   }
   for (let index = currentMoviesCount; index < loopEnd; index++) {
-    render(allMoviesList, createFilmCard(movies[index]));
+    renderTemplate(allMoviesList, createFilmCard(movies[index]));
   }
 });
 
@@ -71,7 +73,7 @@ films.forEach((film) => {
   film.style.cursor = `pointer`;
   film.addEventListener(`click`, () => {
     body.classList.add(`hide-overflow`);
-    render(body, createFilmDetails(movies[0]));
+    renderTemplate(body, createFilmDetails(movies[0]));
     const filmDetail = document.querySelector(`.film-details`);
     const closeButton = filmDetail.querySelector(`.film-details__close-btn`);
 
@@ -92,4 +94,4 @@ films.forEach((film) => {
 });
 
 const siteFooterElement = body.querySelector(`.footer`);
-render(siteFooterElement, createFooterStatistics(MOVIE_COUNT));
+renderTemplate(siteFooterElement, createFooterStatistics(MOVIE_COUNT));
