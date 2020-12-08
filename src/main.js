@@ -21,7 +21,6 @@ render(siteHeaderElement, createHeaderProfile());
 const movies = new Array(MOVIE_COUNT).fill().map(generateMovie);
 const filters = generateFilter(movies);
 
-
 const siteMainElement = document.querySelector(`.main`);
 render(siteMainElement, createMainNavigation(filters), `afterbegin`);
 render(siteMainElement, createSortFilters());

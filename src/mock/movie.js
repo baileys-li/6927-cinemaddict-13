@@ -4,6 +4,7 @@ import {
   getRandomInteger,
   getRandomBoolean
 } from "../utils";
+import {generateComment} from "./comment";
 
 const MOVIE_TITLES = [
   `The Dance of Life`,
@@ -24,12 +25,17 @@ const MOVIE_POSTERS = [
   `the-man-with-the-golden-arm.jpg`,
 ];
 
+const generateComments = () => {
+  const commentsCount = getRandomInteger(0, 5);
+  return Array(commentsCount).fill().map(generateComment);
+};
+
 export const generateMovie = () => {
   return {
     title: returnRandomItem(MOVIE_TITLES),
     poster: returnRandomItem(MOVIE_POSTERS),
     description: generateLoremIpsum(),
-    commentsCount: getRandomInteger(0, 5),
+    comments: generateComments(),
     rating: getRandomInteger(0, 100) / 10,
     year: getRandomInteger(1920, 2020),
 

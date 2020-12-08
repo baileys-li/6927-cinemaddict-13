@@ -1,9 +1,10 @@
-import {createFilmComments} from "./film-comments";
+import {createFilmComment} from "./film-comment";
 import {EMOJI} from "../const";
 
 export const createFilmDetails = (movie) => {
-  const {title, poster, description, commentsCount, rating, year} = movie;
-  const comments = createFilmComments(commentsCount);
+  const {title, poster, description, comments, rating, year} = movie;
+  const commentList = comments.map((comment) => createFilmComment(comment)).join(``);
+
   return `<section class="film-details">
   <form class="film-details__inner" action="" method="get">
     <div class="film-details__top-container">
@@ -83,8 +84,8 @@ export const createFilmDetails = (movie) => {
 
     <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
-        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${commentsCount}</span></h3>
-        ${comments}
+        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${comments.length}</span></h3>
+        <ul class="film-details__comments-list">${commentList}</ul>
         <div class="film-details__new-comment">
           <div class="film-details__add-emoji-label"></div>
 
