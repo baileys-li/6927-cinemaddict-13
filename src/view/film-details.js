@@ -1,7 +1,8 @@
 import {createFilmComment} from "./film-comment";
 import {EMOJI} from "../const";
+import {createElement} from "../utils";
 
-export const createFilmDetails = (movie) => {
+const createFilmDetails = (movie) => {
   const {title, poster, description, comments, rating, year} = movie;
   const commentList = comments.map((comment) => createFilmComment(comment)).join(``);
 
@@ -109,3 +110,22 @@ const createEmojiList = () => {
     </label>`
   ).join(``);
 };
+
+export default class FilmDetail {
+  constructor(movie) {
+    this._element = null;
+    this._movie = movie;
+  }
+
+  getTemplate() {
+    return createFilmDetails(this._movie);
+  }
+
+  getElement() {
+    return this._element ? this._element : createElement(this.getTemplate());
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

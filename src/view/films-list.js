@@ -13,12 +13,12 @@ export const createFilmsList = (headline, isExtra) => {
 };
 
 
-export default class FilmsList{
+export default class FilmsList {
   constructor(list) {
     this._element = null;
     this._headline = list.headline;
     this._isExtra = list.isExtra;
-    this._id = list.id
+    this._id = list.id;
   }
 
   getTemplate() {
