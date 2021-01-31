@@ -1,7 +1,7 @@
-import { generateMovie } from "./mock/movie";
-import { generateFilter } from "./mock/filters";
-import { renderElement } from "./utils";
-import { MOVIE_COUNT, MOVIE_COUNT_PER_STEP } from "./const";
+import {generateMovie} from "./mock/movie";
+import {generateFilter} from "./mock/filters";
+import {renderElement} from "./utils";
+import {MOVIE_COUNT, MOVIE_COUNT_PER_STEP} from "./const";
 
 import HeaderProfile from "./view/header-profile";
 import FooterStatistics from "./view/footer-statistics";
@@ -21,11 +21,7 @@ const movies = new Array(MOVIE_COUNT).fill().map(generateMovie);
 const filters = generateFilter(movies);
 
 const siteMainElement = document.querySelector(`.main`);
-renderElement(
-  siteMainElement,
-  new MainNavigation(filters).getElement(),
-  `afterbegin`
-);
+renderElement(siteMainElement, new MainNavigation(filters).getElement(), `afterbegin`);
 
 renderElement(siteMainElement, new FilmsSection().getElement());
 
@@ -41,9 +37,7 @@ if (movies.length) {
   const allMoviesComponent = new FilmsList(allMovies).getElement();
   renderElement(siteFilmSection, allMoviesComponent);
 
-  const allMoviesList = allMoviesComponent.querySelector(
-    `.films-list__container`
-  );
+  const allMoviesList = allMoviesComponent.querySelector(`.films-list__container`);
 
   renderMovies(0, Math.min(movies.length, MOVIE_COUNT_PER_STEP));
 
@@ -70,7 +64,7 @@ if (movies.length) {
     });
   }
 
-  function renderMovies(from, to) {
+  const renderMovies = (from, to) => {
     for (let index = from; index < to; index++) {
       const filmCard = new FilmCard(movies[index]).getElement();
       renderElement(allMoviesList, filmCard);
@@ -83,41 +77,7 @@ if (movies.length) {
       openMovieDetailOnClick(poster, movies[index]);
       openMovieDetailOnClick(comments, movies[index]);
     }
-  }
-
-  function openMovieDetailOnClick(element, movie) {
-    element.style.cursor = `pointer`;
-    element.addEventListener(`click`, (evt) => {
-      evt.preventDefault();
-
-      body.classList.add(`hide-overflow`);
-      const movieDetail = new FilmDetail(movie);
-      const movieDetailElement = movieDetail.getElement();
-      renderElement(body, movieDetailElement);
-
-      const closeButton = movieDetailElement.querySelector(
-        `.film-details__close-btn`
-      );
-
-      closeButton.addEventListener(`click`, closePopup);
-
-      document.addEventListener(`keydown`, onEscKeydown);
-
-      function onEscKeydown(escEvt) {
-        if (escEvt.key === `Escape` || escEvt.key === `Esc`) {
-          escEvt.preventDefault();
-          closePopup();
-          document.removeEventListener(`keydown`, onEscKeydown);
-        }
-      }
-
-      function closePopup() {
-        movieDetailElement.remove();
-        movieDetail.removeElement();
-        body.classList.remove(`hide-overflow`);
-      }
-    });
-  }
+  };
 
   const topMovies = {
     headline: `Top rated`,
@@ -128,10 +88,7 @@ if (movies.length) {
     isExtra: true,
   };
   renderElement(siteFilmSection, new FilmsList(topMovies).getElement());
-  renderElement(
-    siteFilmSection,
-    new FilmsList(mostCommentedMovies).getElement()
-  );
+  renderElement(siteFilmSection, new FilmsList(mostCommentedMovies).getElement());
 } else {
   const emptyList = {
     headline: `There are no movies in our database`,
@@ -145,6 +102,38 @@ if (movies.length) {
 
 const siteFooterElement = body.querySelector(`.footer`);
 renderElement(
-  siteFooterElement,
-  new FooterStatistics(movies.length).getElement()
+    siteFooterElement,
+    new FooterStatistics(movies.length).getElement()
 );
+
+function openMovieDetailOnClick(element, movie) {
+  element.style.cursor = `pointer`;
+  element.addEventListener(`click`, (evt) => {
+    evt.preventDefault();
+
+    body.classList.add(`hide-overflow`);
+    const movieDetail = new FilmDetail(movie);
+    const movieDetailElement = movieDetail.getElement();
+    renderElement(body, movieDetailElement);
+
+    const closeButton = movieDetailElement.querySelector(`.film-details__close-btn`);
+
+    closeButton.addEventListener(`click`, closePopup);
+
+    document.addEventListener(`keydown`, onEscKeydown);
+
+    function onEscKeydown(escEvt) {
+      if (escEvt.key === `Escape` || escEvt.key === `Esc`) {
+        escEvt.preventDefault();
+        closePopup();
+        document.removeEventListener(`keydown`, onEscKeydown);
+      }
+    }
+
+    function closePopup() {
+      movieDetailElement.remove();
+      movieDetail.removeElement();
+      body.classList.remove(`hide-overflow`);
+    }
+  });
+}

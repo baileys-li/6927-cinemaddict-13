@@ -1,4 +1,4 @@
-import { createElement } from "../utils";
+import {createElement} from "../utils";
 
 export const createFilmsList = (headline, isExtra, isEmpty) => {
   const sectionExtraClass = isExtra ? `films-list--extra` : ``;
