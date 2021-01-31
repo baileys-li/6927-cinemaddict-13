@@ -1,17 +1,15 @@
-import {createElement} from "../utils";
+import { createElement } from "../utils";
 
-export const createFilmsList = (headline, isExtra) => {
+export const createFilmsList = (headline, isExtra, isEmpty) => {
   const sectionExtraClass = isExtra ? `films-list--extra` : ``;
-  const headlineExtraClass = isExtra ? `` : `visually-hidden`;
-
+  const headlineExtraClass = isExtra || isEmpty ? `` : `visually-hidden`;
+  const listContainer = isEmpty ? `` : `<div class="films-list__container"></div>`;
 
   return `<section class="films-list ${sectionExtraClass}">
   <h2 class="films-list__title ${headlineExtraClass}">${headline}</h2>
-  <div class="films-list__container">
-  </div>
+  ${listContainer}
 </section>`;
 };
-
 
 export default class FilmsList {
   constructor(list) {
@@ -19,10 +17,11 @@ export default class FilmsList {
     this._headline = list.headline;
     this._isExtra = list.isExtra;
     this._id = list.id;
+    this._isEmpty = list.isEmpty;
   }
 
   getTemplate() {
-    return createFilmsList(this._headline, this._isExtra);
+    return createFilmsList(this._headline, this._isExtra, this._isEmpty);
   }
 
   getElement() {
