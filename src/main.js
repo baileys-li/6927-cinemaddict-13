@@ -39,6 +39,21 @@ if (movies.length) {
 
   const allMoviesList = allMoviesComponent.querySelector(`.films-list__container`);
 
+  const renderMovies = (from, to) => {
+    for (let index = from; index < to; index++) {
+      const filmCard = new FilmCard(movies[index]).getElement();
+      renderElement(allMoviesList, filmCard);
+
+      const title = filmCard.querySelector(`.film-card__title`);
+      const poster = filmCard.querySelector(`.film-card__poster`);
+      const comments = filmCard.querySelector(`.film-card__comments`);
+
+      openMovieDetailOnClick(title, movies[index]);
+      openMovieDetailOnClick(poster, movies[index]);
+      openMovieDetailOnClick(comments, movies[index]);
+    }
+  };
+
   renderMovies(0, Math.min(movies.length, MOVIE_COUNT_PER_STEP));
 
   if (movies.length > MOVIE_COUNT_PER_STEP) {
@@ -63,21 +78,6 @@ if (movies.length) {
       renderMovies(renderedMovieCount, loopEnd);
     });
   }
-
-  const renderMovies = (from, to) => {
-    for (let index = from; index < to; index++) {
-      const filmCard = new FilmCard(movies[index]).getElement();
-      renderElement(allMoviesList, filmCard);
-
-      const title = filmCard.querySelector(`.film-card__title`);
-      const poster = filmCard.querySelector(`.film-card__poster`);
-      const comments = filmCard.querySelector(`.film-card__comments`);
-
-      openMovieDetailOnClick(title, movies[index]);
-      openMovieDetailOnClick(poster, movies[index]);
-      openMovieDetailOnClick(comments, movies[index]);
-    }
-  };
 
   const topMovies = {
     headline: `Top rated`,
