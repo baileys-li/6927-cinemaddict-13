@@ -1,6 +1,6 @@
 import {createFilmComment} from "./film-comment";
 import {EMOJI} from "../const";
-import {createElement} from "../utils";
+import AbstractView from "./_abstract";
 
 const createFilmDetails = (movie) => {
   const {title, poster, description, comments, rating, year} = movie;
@@ -111,21 +111,13 @@ const createEmojiList = () => {
   ).join(``);
 };
 
-export default class FilmDetail {
+export default class FilmDetail extends AbstractView {
   constructor(movie) {
-    this._element = null;
+    super();
     this._movie = movie;
   }
 
   getTemplate() {
     return createFilmDetails(this._movie);
-  }
-
-  getElement() {
-    return this._element ? this._element : createElement(this.getTemplate());
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

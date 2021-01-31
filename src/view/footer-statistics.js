@@ -1,4 +1,4 @@
-import {createElement} from "../utils";
+import AbstractView from "./_abstract";
 
 export const createFooterStatistics = (count) => {
   return `<section class="footer__statistics">
@@ -7,21 +7,13 @@ export const createFooterStatistics = (count) => {
 };
 
 
-export default class FooterStatistics {
+export default class FooterStatistics extends AbstractView {
   constructor(count) {
-    this._element = null;
+    super();
     this._count = count;
   }
 
   getTemplate() {
     return createFooterStatistics(this._count);
-  }
-
-  getElement() {
-    return this._element ? this._element : createElement(this.getTemplate());
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

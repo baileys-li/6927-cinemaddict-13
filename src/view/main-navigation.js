@@ -1,4 +1,5 @@
-import {createElement, capitalize} from "../utils";
+import {capitalize} from "../utils";
+import AbstractView from "./_abstract";
 
 const createMainNavigation = (filters) => {
   const filtersMarkup = filters
@@ -19,21 +20,13 @@ const createFilterMarkup = (filter) => {
   return `<a href="#${name}" class="main-navigation__item">${capitalize(name)} <span class="main-navigation__item-count">${count}</span></a>`;
 };
 
-export default class MainNavigation {
+export default class MainNavigation extends AbstractView {
   constructor(filters) {
-    this._element = null;
+    super();
     this._filters = filters;
   }
 
   getTemplate() {
     return createMainNavigation(this._filters);
-  }
-
-  getElement() {
-    return this._element ? this._element : createElement(this.getTemplate());
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
