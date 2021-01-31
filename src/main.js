@@ -21,7 +21,11 @@ const movies = new Array(MOVIE_COUNT).fill().map(generateMovie);
 const filters = generateFilter(movies);
 
 const siteMainElement = document.querySelector(`.main`);
-renderElement(siteMainElement, new MainNavigation(filters).getElement(), `afterbegin`);
+renderElement(
+    siteMainElement,
+    new MainNavigation(filters).getElement(),
+    `afterbegin`
+);
 
 renderElement(siteMainElement, new FilmsSection().getElement());
 
@@ -37,7 +41,9 @@ if (movies.length) {
   const allMoviesComponent = new FilmsList(allMovies).getElement();
   renderElement(siteFilmSection, allMoviesComponent);
 
-  const allMoviesList = allMoviesComponent.querySelector(`.films-list__container`);
+  const allMoviesList = allMoviesComponent.querySelector(
+      `.films-list__container`
+  );
 
   const renderMovies = (from, to) => {
     for (let index = from; index < to; index++) {
@@ -62,9 +68,7 @@ if (movies.length) {
 
     renderElement(allMoviesComponent, showMoreElement);
 
-    showMoreElement.addEventListener(`click`, (evt) => {
-      evt.preventDefault();
-
+    showMore.setClickHandler(() => {
       const renderedMovieCount = allMoviesList.childElementCount;
 
       let loopEnd = renderedMovieCount + MOVIE_COUNT_PER_STEP;
@@ -88,7 +92,10 @@ if (movies.length) {
     isExtra: true,
   };
   renderElement(siteFilmSection, new FilmsList(topMovies).getElement());
-  renderElement(siteFilmSection, new FilmsList(mostCommentedMovies).getElement());
+  renderElement(
+      siteFilmSection,
+      new FilmsList(mostCommentedMovies).getElement()
+  );
 } else {
   const emptyList = {
     headline: `There are no movies in our database`,
@@ -116,7 +123,9 @@ function openMovieDetailOnClick(element, movie) {
     const movieDetailElement = movieDetail.getElement();
     renderElement(body, movieDetailElement);
 
-    const closeButton = movieDetailElement.querySelector(`.film-details__close-btn`);
+    const closeButton = movieDetailElement.querySelector(
+        `.film-details__close-btn`
+    );
 
     closeButton.addEventListener(`click`, closePopup);
 
