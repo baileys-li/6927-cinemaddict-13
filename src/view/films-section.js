@@ -1,4 +1,3 @@
-import { extend } from "dayjs";
 import AbstractView from "./_abstract";
 
 const createFilmsSection = () => {
