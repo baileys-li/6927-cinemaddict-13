@@ -3,7 +3,7 @@ import {
   returnRandomItem,
   getRandomInteger,
   getRandomBoolean
-} from "../utils";
+} from "../utils/random";
 import {generateComment} from "./comment";
 
 const MOVIE_TITLES = [

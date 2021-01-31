@@ -1,4 +1,4 @@
-import {capitalize} from "../utils";
+import {capitalize} from "../utils/common";
 import AbstractView from "./_abstract";
 
 const createMainNavigation = (filters) => {

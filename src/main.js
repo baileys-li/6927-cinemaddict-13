@@ -1,6 +1,6 @@
 import {generateMovie} from "./mock/movie";
 import {generateFilter} from "./mock/filters";
-import {renderElement} from "./utils";
+import {render} from "./utils/render";
 import {MOVIE_COUNT, MOVIE_COUNT_PER_STEP} from "./const";
 
 import HeaderProfile from "./view/header-profile";
@@ -15,23 +15,19 @@ import FilmDetail from "./view/film-details";
 
 const body = document.body;
 const siteHeaderElement = body.querySelector(`.header`);
-renderElement(siteHeaderElement, new HeaderProfile().getElement());
+render(siteHeaderElement, new HeaderProfile());
 
 const movies = new Array(MOVIE_COUNT).fill().map(generateMovie);
 const filters = generateFilter(movies);
 
 const siteMainElement = document.querySelector(`.main`);
-renderElement(
-    siteMainElement,
-    new MainNavigation(filters).getElement(),
-    `afterbegin`
-);
+render(siteMainElement, new MainNavigation(filters), `afterbegin`);
 
-renderElement(siteMainElement, new FilmsSection().getElement());
+const siteFilmSection = new FilmsSection();
 
-const siteFilmSection = body.querySelector(`.films`);
 if (movies.length) {
-  renderElement(siteMainElement, new SortFilters().getElement());
+  render(siteMainElement, new SortFilters());
+  render(siteMainElement, siteFilmSection);
 
   const allMovies = {
     headline: `All movies. Upcoming`,
@@ -39,7 +35,7 @@ if (movies.length) {
   };
 
   const allMoviesComponent = new FilmsList(allMovies).getElement();
-  renderElement(siteFilmSection, allMoviesComponent);
+  render(siteFilmSection, allMoviesComponent);
 
   const allMoviesList = allMoviesComponent.querySelector(
       `.films-list__container`
@@ -48,7 +44,7 @@ if (movies.length) {
   const renderMovies = (from, to) => {
     for (let index = from; index < to; index++) {
       const filmCard = new FilmCard(movies[index]).getElement();
-      renderElement(allMoviesList, filmCard);
+      render(allMoviesList, filmCard);
 
       const title = filmCard.querySelector(`.film-card__title`);
       const poster = filmCard.querySelector(`.film-card__poster`);
@@ -66,7 +62,7 @@ if (movies.length) {
     const showMore = new ShowMoreButton();
     const showMoreElement = showMore.getElement();
 
-    renderElement(allMoviesComponent, showMoreElement);
+    render(allMoviesComponent, showMoreElement);
 
     showMore.setClickHandler(() => {
       const renderedMovieCount = allMoviesList.childElementCount;
@@ -91,27 +87,21 @@ if (movies.length) {
     headline: `Most commented`,
     isExtra: true,
   };
-  renderElement(siteFilmSection, new FilmsList(topMovies).getElement());
-  renderElement(
-      siteFilmSection,
-      new FilmsList(mostCommentedMovies).getElement()
-  );
+  render(siteFilmSection, new FilmsList(topMovies));
+  render(siteFilmSection, new FilmsList(mostCommentedMovies));
 } else {
+  render(siteMainElement, siteFilmSection);
+
   const emptyList = {
     headline: `There are no movies in our database`,
     isExtra: false,
     isEmpty: true,
   };
-
-  const emptyListComponent = new FilmsList(emptyList).getElement();
-  renderElement(siteFilmSection, emptyListComponent);
+  render(siteFilmSection, new FilmsList(emptyList));
 }
 
 const siteFooterElement = body.querySelector(`.footer`);
-renderElement(
-    siteFooterElement,
-    new FooterStatistics(movies.length).getElement()
-);
+render(siteFooterElement, new FooterStatistics(movies.length));
 
 function openMovieDetailOnClick(element, movie) {
   element.style.cursor = `pointer`;
@@ -120,8 +110,8 @@ function openMovieDetailOnClick(element, movie) {
 
     body.classList.add(`hide-overflow`);
     const movieDetail = new FilmDetail(movie);
+    render(body, movieDetail);
     const movieDetailElement = movieDetail.getElement();
-    renderElement(body, movieDetailElement);
 
     const closeButton = movieDetailElement.querySelector(
         `.film-details__close-btn`

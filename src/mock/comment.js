@@ -1,4 +1,4 @@
-import {generateLoremIpsum, returnRandomItem, getRandomInteger} from "../utils";
+import {generateLoremIpsum, returnRandomItem, getRandomInteger} from "../utils/random";
 
 import {EMOJI} from "../const";
 import dayjs from "dayjs";
