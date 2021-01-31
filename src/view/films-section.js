@@ -1,24 +1,13 @@
-import {createElement} from "../utils";
+import { extend } from "dayjs";
+import AbstractView from "./_abstract";
 
 const createFilmsSection = () => {
   return `<section class="films">
 </section>`;
 };
 
-export default class FilmsSection {
-  constructor() {
-    this._element = null;
-  }
-
+export default class FilmsSection extends AbstractView {
   getTemplate() {
     return createFilmsSection();
-  }
-
-  getElement() {
-    return this._element ? this._element : createElement(this.getTemplate());
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

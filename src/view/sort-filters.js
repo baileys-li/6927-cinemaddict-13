@@ -1,4 +1,5 @@
-import {createElement} from "../utils";
+import { extend } from "dayjs";
+import AbstractView from "./_abstract";
 
 const createSortFilters = () => {
   return `<ul class="sort">
@@ -7,20 +8,8 @@ const createSortFilters = () => {
   <li><a href="#" class="sort__button">Sort by rating</a></li>
 </ul>`;
 };
-export default class SortFilters {
-  constructor() {
-    this._element = null;
-  }
-
+export default class SortFilters extends AbstractView {
   getTemplate() {
     return createSortFilters();
-  }
-
-  getElement() {
-    return this._element ? this._element : createElement(this.getTemplate());
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

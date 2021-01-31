@@ -1,4 +1,4 @@
-import {createElement} from "../utils";
+import AbstractView from "./_abstract";
 
 const createHeaderProfile = () => {
   return `<section class="header__profile profile">
@@ -7,20 +7,8 @@ const createHeaderProfile = () => {
 </section>`;
 };
 
-export default class HeaderProfile {
-  constructor() {
-    this._element = null;
-  }
-
+export default class HeaderProfile extends AbstractView {
   getTemplate() {
     return createHeaderProfile();
-  }
-
-  getElement() {
-    return this._element ? this._element : createElement(this.getTemplate());
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
