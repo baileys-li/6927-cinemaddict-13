@@ -1,5 +1,5 @@
 import AbstractView from "./_abstract";
-import { SortType } from "../const";
+import {SortType} from "../const";
 
 const createSortFilters = (sortType) => {
   return `<ul class="sort">
@@ -23,7 +23,7 @@ const createSortFilters = (sortType) => {
 export default class SortFilters extends AbstractView {
   constructor(sortType) {
     super();
-    this._sortType = sortType
+    this._sortType = sortType;
     this._sortTypeChangeHandler = this._sortTypeChangeHandler.bind(this);
   }
   getTemplate() {

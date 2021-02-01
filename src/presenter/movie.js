@@ -1,7 +1,7 @@
 import FilmCard from "../view/film-card";
 import FilmDetail from "../view/film-details";
 import FilmCardControl from "../view/film-card-control";
-import { render, remove, replace } from "../utils/render";
+import {render, remove, replace} from "../utils/render";
 
 const Mode = {
   DEFAULT: `DEFAULT`,
@@ -78,7 +78,7 @@ export default class Movie {
   }
 
   _renderControls() {
-    const { isInWatchlist, isWatched, isFavorite } = this._movie;
+    const {isInWatchlist, isWatched, isFavorite} = this._movie;
 
     const CONTROL_PARAMETERS = [
       {
@@ -112,25 +112,25 @@ export default class Movie {
 
   _handleWatchListClick() {
     this._changeData(
-      Object.assign({}, this._movie, {
-        isInWatchlist: !this._movie.isFavorite,
-      })
+        Object.assign({}, this._movie, {
+          isInWatchlist: !this._movie.isFavorite,
+        })
     );
   }
 
   _handleWatchedClick() {
     this._changeData(
-      Object.assign({}, this._movie, {
-        isWatched: !this._movie.isFavorite,
-      })
+        Object.assign({}, this._movie, {
+          isWatched: !this._movie.isFavorite,
+        })
     );
   }
 
   _handleFavoriteClick() {
     this._changeData(
-      Object.assign({}, this._movie, {
-        isFavorite: !this._movie.isFavorite,
-      })
+        Object.assign({}, this._movie, {
+          isFavorite: !this._movie.isFavorite,
+        })
     );
   }
 }

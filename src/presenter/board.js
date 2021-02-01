@@ -3,12 +3,12 @@ import FilmsSection from "../view/films-section";
 import FilmsList from "../view/films-list";
 import Movie from "./movie";
 import ShowMoreButton from "../view/show-more-button";
-import { updateItem } from "../utils/common.js";
+import {updateItem} from "../utils/common.js";
 
-import { render, remove } from "../utils/render";
-import { MOVIE_COUNT_PER_STEP, ListParameter } from "../const";
+import {render, remove} from "../utils/render";
+import {MOVIE_COUNT_PER_STEP, ListParameter} from "../const";
 
-import { SortType } from "../const.js";
+import {SortType} from "../const.js";
 
 export default class MovieBoard {
   constructor(parentElement) {
@@ -76,9 +76,9 @@ export default class MovieBoard {
       .querySelector(`.films-list__container`);
 
     const moviePresenter = new Movie(
-      container,
-      this._handleMovieChange,
-      this._handleModeChange
+        container,
+        this._handleMovieChange,
+        this._handleModeChange
     );
     moviePresenter.init(movie);
     this._moviePresenter[movie.id] = moviePresenter;
@@ -104,8 +104,8 @@ export default class MovieBoard {
       let loopEnd = this._renderedMovieCount + MOVIE_COUNT_PER_STEP;
 
       this._renderMovies(
-        this._renderedMovieCount,
-        Math.min(loopEnd, this._moviesCount)
+          this._renderedMovieCount,
+          Math.min(loopEnd, this._moviesCount)
       );
       this._renderedMovieCount += MOVIE_COUNT_PER_STEP;
 
@@ -150,12 +150,12 @@ export default class MovieBoard {
     switch (sortType) {
       case SortType.DATE:
         this._movies = this._movies.sort(
-          (movieA, movieB) => movieB.year - movieA.year
+            (movieA, movieB) => movieB.year - movieA.year
         );
         break;
       case SortType.RATING:
         this._movies = this._movies.sort(
-          (movieA, movieB) => movieB.rating - movieA.rating
+            (movieA, movieB) => movieB.rating - movieA.rating
         );
         break;
       default:
