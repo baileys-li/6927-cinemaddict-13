@@ -1,5 +1,6 @@
 import FilmCard from "../view/film-card";
 import FilmDetail from "../view/film-details";
+import FilmCardControl from "../view/film-card-control";
 import { render, remove } from "../utils/render";
 
 export default class Movie {
@@ -15,8 +16,9 @@ export default class Movie {
 
   init(movie) {
     this._movie = movie;
-    this._movieCardView = new FilmCard(movie);
+    this._movieCardView = new FilmCard(this._movie);
     render(this._parentElement, this._movieCardView);
+    this._renderControls();
 
     this._movieCardView.setOpenDetailClickHandler(this._openMovieDetail);
   }
@@ -29,6 +31,39 @@ export default class Movie {
     render(body, this._movieDetailView);
 
     this._movieDetailView.setCloseDetail(this._closeDetail);
+  }
+
+  _renderControls() {
+    const controlsContainers = this._movieCardView
+      .getElement()
+      .querySelector(`.film-card__controls`);
+    const { isInWatchlist, isWatched, isFavorite } = this._movie;
+
+    render(
+      controlsContainers,
+      new FilmCardControl({
+        title: `Add to watchlist`,
+        modifier: `add-to-watchlist`,
+        isActive: isInWatchlist,
+      })
+    );
+    render(
+      controlsContainers,
+      new FilmCardControl({
+        title: `Mark as watched`,
+        modifier: `mark-as-watched`,
+        isActive: isWatched,
+      })
+    );
+
+    render(
+      controlsContainers,
+      new FilmCardControl({
+        title: `Mark as favorite`,
+        modifier: `favorite`,
+        isActive: isFavorite,
+      })
+    );
   }
 
   _closeDetail() {
