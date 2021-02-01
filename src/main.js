@@ -4,6 +4,7 @@ import {render} from "./utils/render";
 import {MOVIE_COUNT} from "./const";
 
 import HeaderProfile from "./view/header-profile";
+import MainNavigation from "./view/main-navigation";
 import MovieBoard from "./presenter/movie-board";
 import FooterStatistics from "./view/footer-statistics";
 
@@ -17,7 +18,8 @@ const filters = generateFilter(movies);
 
 const siteMainElement = body.querySelector(`.main`);
 
-const movieBoard = new MovieBoard(siteMainElement, filters);
+const movieBoard = new MovieBoard(siteMainElement);
+render(siteMainElement, new MainNavigation(filters));
 movieBoard.init(movies);
 
 const siteFooterElement = body.querySelector(`.footer`);

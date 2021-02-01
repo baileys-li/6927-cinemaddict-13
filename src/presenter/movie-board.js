@@ -1,4 +1,3 @@
-import MainNavigation from "../view/main-navigation";
 import SortFilters from "../view/sort-filters";
 import FilmsSection from "../view/films-section";
 import FilmsList from "../view/films-list";
@@ -30,10 +29,9 @@ const LIST_PARAMETERS = {
 };
 
 export default class MovieBoard {
-  constructor(parentElement, filters) {
+  constructor(parentElement) {
     this._parentElement = parentElement;
 
-    this._mainNavigation = new MainNavigation(filters);
     this._filmsSection = new FilmsSection();
     this._sortFilters = new SortFilters();
     this._lists = [];
@@ -43,7 +41,6 @@ export default class MovieBoard {
     this._movies = movies.slice();
     this._moviesCount = this._movies.length;
 
-    render(this._parentElement, this._mainNavigation);
     this._renderSortFilter();
 
     render(this._parentElement, this._filmsSection);
