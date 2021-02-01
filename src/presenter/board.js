@@ -4,28 +4,8 @@ import FilmsList from "../view/films-list";
 import Movie from "./movie";
 import ShowMoreButton from "../view/show-more-button";
 
-import {render, remove} from "../utils/render";
-import {MOVIE_COUNT_PER_STEP} from "../const";
-
-const LIST_PARAMETERS = {
-  empty: {
-    headline: `There are no movies in our database`,
-    isExtra: false,
-    isEmpty: true,
-  },
-  all: {
-    headline: `All movies. Upcoming`,
-    isExtra: false,
-  },
-  top: {
-    headline: `Top rated`,
-    isExtra: true,
-  },
-  mostCommented: {
-    headline: `Most commented`,
-    isExtra: true,
-  },
-};
+import { render, remove } from "../utils/render";
+import { MOVIE_COUNT_PER_STEP, LIST_PARAMETERS } from "../const";
 
 export default class MovieBoard {
   constructor(parentElement) {
@@ -34,6 +14,9 @@ export default class MovieBoard {
     this._filmsSection = new FilmsSection();
     this._sortFilters = new SortFilters();
     this._lists = [];
+    this._moviePresenter = {};
+
+    this._renderedMovieCount = MOVIE_COUNT_PER_STEP;
   }
 
   init(movies) {
@@ -70,8 +53,10 @@ export default class MovieBoard {
 
   _renderMovies(from, to) {
     for (let index = from; index < to; index++) {
-      const movie = new Movie(this._allMoviesList);
-      movie.init(this._movies[index]);
+      const moviePresenter = new Movie(this._allMoviesList);
+      const movie = this._movies[index];
+      moviePresenter.init(movie);
+      this._moviePresenter[movie.id] = moviePresenter;
     }
   }
 
@@ -95,17 +80,27 @@ export default class MovieBoard {
     render(allMoviesComponent, this._showMoreButton);
 
     this._showMoreButton.setClickHandler(() => {
-      const renderedMovieCount = this._allMoviesList.childElementCount;
+      let loopEnd = this._renderedMovieCount + MOVIE_COUNT_PER_STEP;
 
-      let loopEnd = renderedMovieCount + MOVIE_COUNT_PER_STEP;
+      this._renderMovies(
+        this._renderedMovieCount,
+        Math.min(loopEnd, this._moviesCount)
+      );
+      this._renderedMovieCount += MOVIE_COUNT_PER_STEP;
 
-      if (loopEnd >= this._moviesCount) {
-        loopEnd = this._moviesCount;
+      if (this._renderedMovieCount >= this._moviesCount) {
+        this._renderedMovieCount = this._moviesCount;
         remove(this._showMoreButton);
       }
-
-      this._renderMovies(renderedMovieCount, loopEnd);
     });
   }
-}
 
+  _clearMovieList() {
+    Object.values(this._moviePresenter).forEach((presenter) =>
+      presenter.destroy()
+    );
+    this._moviePresenter = {};
+    this._renderedTaskCount = TASK_COUNT_PER_STEP;
+    remove(this._showMoreButton);
+  }
+}

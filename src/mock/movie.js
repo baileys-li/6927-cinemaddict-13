@@ -6,6 +6,8 @@ import {
 } from "../utils/random";
 import {generateComment} from "./comment";
 
+const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
+
 const MOVIE_TITLES = [
   `The Dance of Life`,
   `Sagebrush Trail`,
@@ -32,6 +34,7 @@ const generateComments = () => {
 
 export const generateMovie = () => {
   return {
+    id: generateId(),
     title: returnRandomItem(MOVIE_TITLES),
     poster: returnRandomItem(MOVIE_POSTERS),
     description: generateLoremIpsum(),
