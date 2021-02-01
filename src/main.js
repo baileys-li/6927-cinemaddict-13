@@ -5,7 +5,7 @@ import {MOVIE_COUNT} from "./const";
 
 import HeaderProfile from "./view/header-profile";
 import MainNavigation from "./view/main-navigation";
-import MovieBoard from "./presenter/movie-board";
+import MovieBoard from "./presenter/board";
 import FooterStatistics from "./view/footer-statistics";
 
 

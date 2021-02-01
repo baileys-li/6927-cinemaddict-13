@@ -1,9 +1,8 @@
 import SortFilters from "../view/sort-filters";
 import FilmsSection from "../view/films-section";
 import FilmsList from "../view/films-list";
-import FilmCard from "../view/film-card";
+import Movie from "./movie";
 import ShowMoreButton from "../view/show-more-button";
-import FilmDetail from "../view/film-details";
 
 import {render, remove} from "../utils/render";
 import {MOVIE_COUNT_PER_STEP} from "../const";
@@ -71,16 +70,8 @@ export default class MovieBoard {
 
   _renderMovies(from, to) {
     for (let index = from; index < to; index++) {
-      const filmCard = new FilmCard(this._movies[index]).getElement();
-      render(this._allMoviesList, filmCard);
-
-      const title = filmCard.querySelector(`.film-card__title`);
-      const poster = filmCard.querySelector(`.film-card__poster`);
-      const comments = filmCard.querySelector(`.film-card__comments`);
-
-      openMovieDetailOnClick(title, this._movies[index]);
-      openMovieDetailOnClick(poster, this._movies[index]);
-      openMovieDetailOnClick(comments, this._movies[index]);
+      const movie = new Movie(this._allMoviesList);
+      movie.init(this._movies[index]);
     }
   }
 
@@ -118,37 +109,3 @@ export default class MovieBoard {
   }
 }
 
-function openMovieDetailOnClick(element, movie) {
-  element.style.cursor = `pointer`;
-
-  const body = document.body;
-  element.addEventListener(`click`, (evt) => {
-    evt.preventDefault();
-
-    body.classList.add(`hide-overflow`);
-    const movieDetail = new FilmDetail(movie);
-    render(body, movieDetail);
-    const movieDetailElement = movieDetail.getElement();
-
-    const closeButton = movieDetailElement.querySelector(
-        `.film-details__close-btn`
-    );
-
-    closeButton.addEventListener(`click`, closePopup);
-
-    document.addEventListener(`keydown`, onEscKeydown);
-
-    function onEscKeydown(escEvt) {
-      if (escEvt.key === `Escape` || escEvt.key === `Esc`) {
-        escEvt.preventDefault();
-        closePopup();
-        document.removeEventListener(`keydown`, onEscKeydown);
-      }
-    }
-
-    function closePopup() {
-      remove(movieDetail);
-      body.classList.remove(`hide-overflow`);
-    }
-  });
-}
