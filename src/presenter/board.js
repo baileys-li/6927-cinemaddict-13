@@ -20,7 +20,6 @@ export default class MovieBoard {
     this._lists = [];
     this._moviePresenter = {};
 
-
     this._renderedMovieCount = MOVIE_COUNT_PER_STEP;
 
     this._handleMovieChange = this._handleMovieChange.bind(this);
@@ -36,18 +35,20 @@ export default class MovieBoard {
     if (!this._moviesCount) {
       this._renderNoMovies();
     } else {
-      this._lists.push(LIST_PARAMETERS.all);
-      this._lists.push(LIST_PARAMETERS.top);
-      this._lists.push(LIST_PARAMETERS.mostCommented);
-
-      this._renderSortFilter();
-
-      this._renderLists();
-      this._renderMoviesInMainList();
+      this._renderBoard();
     }
-
   }
 
+  _renderBoard() {
+    this._lists.push(LIST_PARAMETERS.all);
+    this._lists.push(LIST_PARAMETERS.top);
+    this._lists.push(LIST_PARAMETERS.mostCommented);
+
+    this._renderSortFilter();
+
+    this._renderLists();
+    this._renderMoviesInMainList();
+  }
   _renderSortFilter() {
     if (this._moviesCount) {
       render(this._parentElement, this._sortFilters);
@@ -55,7 +56,7 @@ export default class MovieBoard {
     }
   }
 
-  _renderNoMovies () {
+  _renderNoMovies() {
     this._lists = [LIST_PARAMETERS.empty];
     this._renderLists();
   }
@@ -149,10 +150,14 @@ export default class MovieBoard {
   _sortTasks(sortType) {
     switch (sortType) {
       case SortType.DATE:
-        this._movies = this._movies.sort((movieA, movieB) => movieB.year - movieA.year);
+        this._movies = this._movies.sort(
+          (movieA, movieB) => movieB.year - movieA.year
+        );
         break;
       case SortType.RATING:
-        this._movies = this._movies.sort((movieA, movieB) => movieB.rating - movieA.rating);
+        this._movies = this._movies.sort(
+          (movieA, movieB) => movieB.rating - movieA.rating
+        );
         break;
       default:
         this._movies = this._sourcedMovies.slice();
