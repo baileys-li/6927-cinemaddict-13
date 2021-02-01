@@ -34,6 +34,7 @@ export default class Movie {
 
     if (prevMovieCardView === null) {
       this._renderMovieCard();
+      render(this._parentElement, this._movieCardView);
       return;
     }
 
@@ -46,7 +47,6 @@ export default class Movie {
 
   _renderMovieCard() {
     this._movieCardView = new FilmCard(this._movie);
-    render(this._parentElement, this._movieCardView);
     this._renderControls();
     this._movieCardView.setWatchListClickHandler(this._handleWatchListClick);
     this._movieCardView.setWatchedClickHandler(this._handleWatchedClick);

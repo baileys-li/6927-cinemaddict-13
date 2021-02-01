@@ -6,21 +6,20 @@ import ShowMoreButton from "../view/show-more-button";
 import { updateItem } from "../utils/common.js";
 
 import { render, remove } from "../utils/render";
-import { MOVIE_COUNT_PER_STEP, LIST_PARAMETERS } from "../const";
+import { MOVIE_COUNT_PER_STEP, ListParameter } from "../const";
 
 import { SortType } from "../const.js";
 
 export default class MovieBoard {
   constructor(parentElement) {
     this._parentElement = parentElement;
+    this._renderedMovieCount = MOVIE_COUNT_PER_STEP;
+    this._moviePresenter = {};
+    this._lists = [];
+    this._currentSortType = SortType.DEFAULT;
 
     this._filmsSection = new FilmsSection();
-    this._currentSortType = SortType.DEFAULT;
     this._sortFilters = new SortFilters(this._currentSortType);
-    this._lists = [];
-    this._moviePresenter = {};
-
-    this._renderedMovieCount = MOVIE_COUNT_PER_STEP;
 
     this._handleMovieChange = this._handleMovieChange.bind(this);
     this._handleModeChange = this._handleModeChange.bind(this);
@@ -40,14 +39,11 @@ export default class MovieBoard {
   }
 
   _renderBoard() {
-    this._lists.push(LIST_PARAMETERS.all);
-    this._lists.push(LIST_PARAMETERS.top);
-    this._lists.push(LIST_PARAMETERS.mostCommented);
+    this._lists.push(ListParameter.ALL);
 
     this._renderSortFilter();
-
     this._renderLists();
-    this._renderMoviesInMainList();
+    this._renderMovieList();
   }
   _renderSortFilter() {
     if (this._moviesCount) {
@@ -57,7 +53,7 @@ export default class MovieBoard {
   }
 
   _renderNoMovies() {
-    this._lists = [LIST_PARAMETERS.empty];
+    this._lists = [ListParameter.EMPTY];
     this._renderLists();
   }
 
@@ -69,14 +65,18 @@ export default class MovieBoard {
   }
 
   _renderMovies(from, to) {
-    for (let index = from; index < to; index++) {
-      this._renderMovie(this._movies[index]);
-    }
+    this._movies.slice(from, to).forEach((movie, index) => {
+      this._renderMovie(movie);
+    });
   }
 
   _renderMovie(movie) {
+    const container = this._filmsSection
+      .getElement()
+      .querySelector(`.films-list__container`);
+
     const moviePresenter = new Movie(
-      this._allMoviesList,
+      container,
       this._handleMovieChange,
       this._handleModeChange
     );
@@ -84,10 +84,7 @@ export default class MovieBoard {
     this._moviePresenter[movie.id] = moviePresenter;
   }
 
-  _renderMoviesInMainList() {
-    this._allMoviesList = this._filmsSection
-      .getElement()
-      .querySelector(`.films-list__container`);
+  _renderMovieList() {
     this._renderMovies(0, Math.min(this._moviesCount, MOVIE_COUNT_PER_STEP));
 
     if (this._moviesCount > MOVIE_COUNT_PER_STEP) {
@@ -98,7 +95,7 @@ export default class MovieBoard {
   _renderShowMoreButton() {
     const allMoviesComponent = this._filmsSection
       .getElement()
-      .querySelector(`.films-list `);
+      .querySelector(`.films-list`);
 
     this._showMoreButton = new ShowMoreButton();
     render(allMoviesComponent, this._showMoreButton);
