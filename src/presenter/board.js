@@ -3,53 +3,65 @@ import FilmsSection from "../view/films-section";
 import FilmsList from "../view/films-list";
 import Movie from "./movie";
 import ShowMoreButton from "../view/show-more-button";
-import {updateItem} from "../utils/common.js";
+import { updateItem } from "../utils/common.js";
 
-import {render, remove} from "../utils/render";
-import {MOVIE_COUNT_PER_STEP, LIST_PARAMETERS} from "../const";
+import { render, remove } from "../utils/render";
+import { MOVIE_COUNT_PER_STEP, LIST_PARAMETERS } from "../const";
+
+import { SortType } from "../const.js";
 
 export default class MovieBoard {
   constructor(parentElement) {
     this._parentElement = parentElement;
 
     this._filmsSection = new FilmsSection();
-    this._sortFilters = new SortFilters();
+    this._currentSortType = SortType.DEFAULT;
+    this._sortFilters = new SortFilters(this._currentSortType);
     this._lists = [];
     this._moviePresenter = {};
+
 
     this._renderedMovieCount = MOVIE_COUNT_PER_STEP;
 
     this._handleMovieChange = this._handleMovieChange.bind(this);
     this._handleModeChange = this._handleModeChange.bind(this);
+    this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
   }
 
   init(movies) {
     this._movies = movies.slice();
+    this._sourcedMovies = movies.slice();
     this._moviesCount = this._movies.length;
 
-    this._renderSortFilter();
+    if (!this._moviesCount) {
+      this._renderNoMovies();
+    } else {
+      this._lists.push(LIST_PARAMETERS.all);
+      this._lists.push(LIST_PARAMETERS.top);
+      this._lists.push(LIST_PARAMETERS.mostCommented);
 
-    render(this._parentElement, this._filmsSection);
-    this._renderLists();
-    if (this._moviesCount) {
+      this._renderSortFilter();
+
+      this._renderLists();
       this._renderMoviesInMainList();
     }
+
   }
 
   _renderSortFilter() {
     if (this._moviesCount) {
       render(this._parentElement, this._sortFilters);
+      this._sortFilters.setSortTypeChangeHandler(this._handleSortTypeChange);
     }
   }
 
+  _renderNoMovies () {
+    this._lists = [LIST_PARAMETERS.empty];
+    this._renderLists();
+  }
+
   _renderLists() {
-    if (!this._moviesCount) {
-      this._lists.push(LIST_PARAMETERS.empty);
-    } else {
-      this._lists.push(LIST_PARAMETERS.all);
-      this._lists.push(LIST_PARAMETERS.top);
-      this._lists.push(LIST_PARAMETERS.mostCommented);
-    }
+    render(this._parentElement, this._filmsSection);
     this._lists.forEach((list) => {
       render(this._filmsSection, new FilmsList(list));
     });
@@ -63,9 +75,9 @@ export default class MovieBoard {
 
   _renderMovie(movie) {
     const moviePresenter = new Movie(
-        this._allMoviesList,
-        this._handleMovieChange,
-        this._handleModeChange
+      this._allMoviesList,
+      this._handleMovieChange,
+      this._handleModeChange
     );
     moviePresenter.init(movie);
     this._moviePresenter[movie.id] = moviePresenter;
@@ -94,8 +106,8 @@ export default class MovieBoard {
       let loopEnd = this._renderedMovieCount + MOVIE_COUNT_PER_STEP;
 
       this._renderMovies(
-          this._renderedMovieCount,
-          Math.min(loopEnd, this._moviesCount)
+        this._renderedMovieCount,
+        Math.min(loopEnd, this._moviesCount)
       );
       this._renderedMovieCount += MOVIE_COUNT_PER_STEP;
 
@@ -124,5 +136,28 @@ export default class MovieBoard {
     Object.values(this._moviePresenter).forEach((presenter) =>
       presenter.resetView()
     );
+  }
+
+  _handleSortTypeChange(sortType) {
+    if (this._currentSortType === sortType) {
+      return;
+    }
+
+    this._sortTasks(sortType);
+  }
+
+  _sortTasks(sortType) {
+    switch (sortType) {
+      case SortType.DATE:
+        this._movies = this._movies.sort((movieA, movieB) => movieB.year - movieA.year);
+        break;
+      case SortType.RATING:
+        this._movies = this._movies.sort((movieA, movieB) => movieB.rating - movieA.rating);
+        break;
+      default:
+        this._movies = this._sourcedMovies.slice();
+    }
+
+    this._currentSortType = sortType;
   }
 }

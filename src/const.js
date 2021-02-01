@@ -21,3 +21,9 @@ export const LIST_PARAMETERS = {
     isExtra: true,
   },
 };
+
+export const SortType = {
+  DEFAULT: `default`,
+  DATE: `date`,
+  RATING: `rating`
+};
