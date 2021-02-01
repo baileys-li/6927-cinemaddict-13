@@ -4,48 +4,48 @@ import FilmCardControl from "../view/film-card-control";
 import { render, remove, replace } from "../utils/render";
 
 export default class Movie {
-  constructor(parentElement) {
+  constructor(parentElement, changeData) {
     this._parentElement = parentElement;
+    this._changeData = changeData;
 
     this._movieCardView = null;
     this._movieDetailView = null;
 
     this._openMovieDetail = this._openMovieDetail.bind(this);
     this._closeDetail = this._closeDetail.bind(this);
+
+    this._handleWatchListClick = this._handleWatchListClick.bind(this);
+    this._handleWatchedClick = this._handleWatchedClick.bind(this);
+    this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
   }
 
   init(movie) {
     this._movie = movie;
 
     const prevMovieCardView = this._movieCardView;
-    const prevMovieDetailView = this._movieDetailView;
 
-    this._movieCardView = new FilmCard(this._movie);
-    this._movieDetailView = new FilmDetail(this._movie);
+    this._renderMovieCard();
 
-
-    this._movieCardView.setOpenDetailClickHandler(this._openMovieDetail);
-
-
-    if (prevMovieCardView === null || prevMovieDetailView === null) {
-      render(this._parentElement, this._movieCardView);
-      this._renderControls();
-      this._movieCardView.setOpenDetailClickHandler(this._openMovieDetail);
+    if (prevMovieCardView === null) {
+      this._renderMovieCard();
       return;
     }
 
     if (this._parentElement.contains(prevMovieCardView.getElement())) {
       replace(this._movieCardView, prevMovieCardView);
     }
-
-    if (document.body.contains(prevMovieDetailView.getElement())) {
-      replace(this._movieDetailView, prevMovieDetailView);
-    }
-
     remove(prevMovieCardView);
-    remove(prevMovieDetailView);
   }
 
+  _renderMovieCard() {
+    this._movieCardView = new FilmCard(this._movie);
+    render(this._parentElement, this._movieCardView);
+    this._renderControls();
+    this._movieCardView.setWatchListClickHandler(this._handleWatchListClick);
+    this._movieCardView.setWatchedClickHandler(this._handleWatchedClick);
+    this._movieCardView.setFavoriteClickHandler(this._handleFavoriteClick);
+    this._movieCardView.setOpenDetailClickHandler(this._openMovieDetail);
+  }
 
   destroy() {
     remove(this._movieCardView);
@@ -97,5 +97,29 @@ export default class Movie {
     remove(this._movieDetailView);
     this._movieDetailView = null;
     document.body.classList.remove(`hide-overflow`);
+  }
+
+  _handleWatchListClick() {
+    this._changeData(
+      Object.assign({}, this._movie, {
+        isInWatchlist: !this._movie.isFavorite,
+      })
+    );
+  }
+
+  _handleWatchedClick() {
+    this._changeData(
+      Object.assign({}, this._movie, {
+        isWatched: !this._movie.isFavorite,
+      })
+    );
+  }
+
+  _handleFavoriteClick() {
+    this._changeData(
+      Object.assign({}, this._movie, {
+        isFavorite: !this._movie.isFavorite,
+      })
+    );
   }
 }

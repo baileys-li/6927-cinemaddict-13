@@ -3,6 +3,7 @@ import FilmsSection from "../view/films-section";
 import FilmsList from "../view/films-list";
 import Movie from "./movie";
 import ShowMoreButton from "../view/show-more-button";
+import {updateItem} from "../utils/common.js";
 
 import { render, remove } from "../utils/render";
 import { MOVIE_COUNT_PER_STEP, LIST_PARAMETERS } from "../const";
@@ -17,6 +18,8 @@ export default class MovieBoard {
     this._moviePresenter = {};
 
     this._renderedMovieCount = MOVIE_COUNT_PER_STEP;
+
+    this._handleMovieChange = this._handleMovieChange.bind(this);
   }
 
   init(movies) {
@@ -53,11 +56,14 @@ export default class MovieBoard {
 
   _renderMovies(from, to) {
     for (let index = from; index < to; index++) {
-      const moviePresenter = new Movie(this._allMoviesList);
-      const movie = this._movies[index];
-      moviePresenter.init(movie);
-      this._moviePresenter[movie.id] = moviePresenter;
+      this._renderMovie(this._movies[index]);
     }
+  }
+
+  _renderMovie(movie) {
+    const moviePresenter = new Movie(this._allMoviesList, this._handleMovieChange);
+    moviePresenter.init(movie);
+    this._moviePresenter[movie.id] = moviePresenter;
   }
 
   _renderMoviesInMainList() {
@@ -100,7 +106,12 @@ export default class MovieBoard {
       presenter.destroy()
     );
     this._moviePresenter = {};
-    this._renderedTaskCount = TASK_COUNT_PER_STEP;
+    this._renderedMovieCount = TASK_COUNT_PER_STEP;
     remove(this._showMoreButton);
+  }
+
+  _handleMovieChange(updatedMovie) {
+    this._movies = updateItem(this._movies, updatedMovie);
+    this._moviePresenter[updatedMovie.id].init(updatedMovie);
   }
 }
