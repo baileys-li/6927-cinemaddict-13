@@ -1,9 +1,9 @@
-import { createFilmComment } from "./film-comment";
-import { EMOJI } from "../const";
+import {createFilmComment} from "./film-comment";
+import {EMOJI} from "../const";
 import AbstractView from "./_abstract";
 
 const createFilmDetails = (movie) => {
-  const { title, poster, description, comments, rating, year } = movie;
+  const {title, poster, description, comments, rating, year} = movie;
   const commentList = comments
     .map((comment) => createFilmComment(comment))
     .join(``);
@@ -88,8 +88,8 @@ const createFilmDetails = (movie) => {
     <div class="film-details__bottom-container">
       <section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${
-          comments.length
-        }</span></h3>
+  comments.length
+}</span></h3>
         <ul class="film-details__comments-list">${commentList}</ul>
         <div class="film-details__new-comment">
           <div class="film-details__add-emoji-label"></div>
@@ -109,9 +109,9 @@ const createFilmDetails = (movie) => {
 
 const createEmojiList = () => {
   return EMOJI.map(
-    (
-      emoji
-    ) => `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="${emoji}">
+      (
+          emoji
+      ) => `<input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="${emoji}">
     <label class="film-details__emoji-label" for="emoji-${emoji}">
       <img src="./images/emoji/${emoji}.png" width="30" height="30" alt="emoji">
     </label>`
@@ -147,7 +147,7 @@ export default class FilmDetail extends AbstractView {
     this._callback.closeDetail = callback;
 
     const closeButton = this.getElement().querySelector(
-      `.film-details__close-btn`
+        `.film-details__close-btn`
     );
 
     closeButton.addEventListener(`click`, this._closeClickHandler);

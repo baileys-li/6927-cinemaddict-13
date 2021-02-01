@@ -5,8 +5,8 @@ import Movie from "./movie";
 import ShowMoreButton from "../view/show-more-button";
 import {updateItem} from "../utils/common.js";
 
-import { render, remove } from "../utils/render";
-import { MOVIE_COUNT_PER_STEP, LIST_PARAMETERS } from "../const";
+import {render, remove} from "../utils/render";
+import {MOVIE_COUNT_PER_STEP, LIST_PARAMETERS} from "../const";
 
 export default class MovieBoard {
   constructor(parentElement) {
@@ -20,6 +20,7 @@ export default class MovieBoard {
     this._renderedMovieCount = MOVIE_COUNT_PER_STEP;
 
     this._handleMovieChange = this._handleMovieChange.bind(this);
+    this._handleModeChange = this._handleModeChange.bind(this);
   }
 
   init(movies) {
@@ -61,7 +62,11 @@ export default class MovieBoard {
   }
 
   _renderMovie(movie) {
-    const moviePresenter = new Movie(this._allMoviesList, this._handleMovieChange);
+    const moviePresenter = new Movie(
+        this._allMoviesList,
+        this._handleMovieChange,
+        this._handleModeChange
+    );
     moviePresenter.init(movie);
     this._moviePresenter[movie.id] = moviePresenter;
   }
@@ -89,8 +94,8 @@ export default class MovieBoard {
       let loopEnd = this._renderedMovieCount + MOVIE_COUNT_PER_STEP;
 
       this._renderMovies(
-        this._renderedMovieCount,
-        Math.min(loopEnd, this._moviesCount)
+          this._renderedMovieCount,
+          Math.min(loopEnd, this._moviesCount)
       );
       this._renderedMovieCount += MOVIE_COUNT_PER_STEP;
 
@@ -106,12 +111,18 @@ export default class MovieBoard {
       presenter.destroy()
     );
     this._moviePresenter = {};
-    this._renderedMovieCount = TASK_COUNT_PER_STEP;
+    this._renderedMovieCount = MOVIE_COUNT_PER_STEP;
     remove(this._showMoreButton);
   }
 
   _handleMovieChange(updatedMovie) {
     this._movies = updateItem(this._movies, updatedMovie);
     this._moviePresenter[updatedMovie.id].init(updatedMovie);
+  }
+
+  _handleModeChange() {
+    Object.values(this._moviePresenter).forEach((presenter) =>
+      presenter.resetView()
+    );
   }
 }

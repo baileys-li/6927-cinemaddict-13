@@ -1,7 +1,7 @@
 import AbstractView from "./_abstract";
 
 const createFilmCard = (movie) => {
-  const { title, poster, description, comments, rating, year } = movie;
+  const {title, poster, description, comments, rating, year} = movie;
   return `<article class="film-card">
   <h3 class="film-card__title">${title}</h3>
   <p class="film-card__rating">${rating}</p>
@@ -58,7 +58,7 @@ export default class FilmCard extends AbstractView {
     const OPEN_DETAIL_ELEMENTS = [`title`, `poster`, `comments`];
     OPEN_DETAIL_ELEMENTS.forEach((element) => {
       const elementMarkup = this.getElement().querySelector(
-        `.film-card__${element}`
+          `.film-card__${element}`
       );
       elementMarkup.style.cursor = `pointer`;
       elementMarkup.addEventListener(`click`, this._openDetailClickHandler);
