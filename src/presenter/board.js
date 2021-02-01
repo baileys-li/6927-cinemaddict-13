@@ -141,10 +141,12 @@ export default class MovieBoard {
       return;
     }
 
-    this._sortTasks(sortType);
+    this._sortMovies(sortType);
+    this._clearMovieList();
+    this._renderMovieList();
   }
 
-  _sortTasks(sortType) {
+  _sortMovies(sortType) {
     switch (sortType) {
       case SortType.DATE:
         this._movies = this._movies.sort(

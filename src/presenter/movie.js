@@ -59,7 +59,6 @@ export default class Movie {
 
   destroy() {
     remove(this._movieCardView);
-    remove(this._movieDetailView);
   }
 
   resetView() {
