@@ -1,6 +1,6 @@
 import {generateMovie} from "./mock/movie";
 import {generateFilter} from "./mock/filters";
-import {render} from "./utils/render";
+import {render, remove} from "./utils/render";
 import {MOVIE_COUNT, MOVIE_COUNT_PER_STEP} from "./const";
 
 import HeaderProfile from "./view/header-profile";
@@ -60,9 +60,7 @@ if (movies.length) {
 
   if (movies.length > MOVIE_COUNT_PER_STEP) {
     const showMore = new ShowMoreButton();
-    const showMoreElement = showMore.getElement();
-
-    render(allMoviesComponent, showMoreElement);
+    render(allMoviesComponent, showMore);
 
     showMore.setClickHandler(() => {
       const renderedMovieCount = allMoviesList.childElementCount;
@@ -71,8 +69,7 @@ if (movies.length) {
 
       if (loopEnd >= movies.length) {
         loopEnd = movies.length;
-        showMoreElement.remove();
-        showMore.removeElement();
+        remove(showMore);
       }
 
       renderMovies(renderedMovieCount, loopEnd);
@@ -130,8 +127,7 @@ function openMovieDetailOnClick(element, movie) {
     }
 
     function closePopup() {
-      movieDetailElement.remove();
-      movieDetail.removeElement();
+      remove(movieDetail);
       body.classList.remove(`hide-overflow`);
     }
   });
