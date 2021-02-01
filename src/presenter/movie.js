@@ -1,7 +1,7 @@
 import FilmCard from "../view/film-card";
 import FilmDetail from "../view/film-details";
 import FilmCardControl from "../view/film-card-control";
-import { render, remove } from "../utils/render";
+import { render, remove, replace } from "../utils/render";
 
 export default class Movie {
   constructor(parentElement) {
@@ -16,16 +16,43 @@ export default class Movie {
 
   init(movie) {
     this._movie = movie;
+
+    const prevMovieCardView = this._movieCardView;
+    const prevMovieDetailView = this._movieDetailView;
+
     this._movieCardView = new FilmCard(this._movie);
-    render(this._parentElement, this._movieCardView);
-    this._renderControls();
+    this._movieDetailView = new FilmDetail(this._movie);
+
 
     this._movieCardView.setOpenDetailClickHandler(this._openMovieDetail);
+
+
+    if (prevMovieCardView === null || prevMovieDetailView === null) {
+      render(this._parentElement, this._movieCardView);
+      this._renderControls();
+      this._movieCardView.setOpenDetailClickHandler(this._openMovieDetail);
+      return;
+    }
+
+    if (this._parentElement.contains(prevMovieCardView.getElement())) {
+      replace(this._movieCardView, prevMovieCardView);
+    }
+
+    if (document.body.contains(prevMovieDetailView.getElement())) {
+      replace(this._movieDetailView, prevMovieDetailView);
+    }
+
+    remove(prevMovieCardView);
+    remove(prevMovieDetailView);
+  }
+
+
+  destroy() {
+    remove(this._movieCardView);
+    remove(this._movieDetailView);
   }
 
   _openMovieDetail() {
-    this._movieDetailView = new FilmDetail(this._movie);
-
     const body = document.body;
     body.classList.add(`hide-overflow`);
     render(body, this._movieDetailView);
