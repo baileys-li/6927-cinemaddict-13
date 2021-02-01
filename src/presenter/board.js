@@ -65,7 +65,7 @@ export default class MovieBoard {
   }
 
   _renderMovies(from, to) {
-    this._movies.slice(from, to).forEach((movie, index) => {
+    this._movies.slice(from, to).forEach((movie) => {
       this._renderMovie(movie);
     });
   }

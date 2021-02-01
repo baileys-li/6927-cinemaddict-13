@@ -1,7 +1,7 @@
 import FilmCard from "../view/film-card";
 import FilmDetail from "../view/film-details";
 import FilmCardControl from "../view/film-card-control";
-import {render, remove, replace} from "../utils/render";
+import { render, remove, replace } from "../utils/render";
 
 const Mode = {
   DEFAULT: `DEFAULT`,
@@ -47,6 +47,9 @@ export default class Movie {
 
   _renderMovieCard() {
     this._movieCardView = new FilmCard(this._movie);
+    this._controlsContainer = this._movieCardView
+      .getElement()
+      .querySelector(`.film-card__controls`);
     this._renderControls();
     this._movieCardView.setWatchListClickHandler(this._handleWatchListClick);
     this._movieCardView.setWatchedClickHandler(this._handleWatchedClick);
@@ -76,36 +79,29 @@ export default class Movie {
   }
 
   _renderControls() {
-    const controlsContainers = this._movieCardView
-      .getElement()
-      .querySelector(`.film-card__controls`);
-    const {isInWatchlist, isWatched, isFavorite} = this._movie;
+    const { isInWatchlist, isWatched, isFavorite } = this._movie;
 
-    render(
-        controlsContainers,
-        new FilmCardControl({
-          title: `Add to watchlist`,
-          modifier: `add-to-watchlist`,
-          isActive: isInWatchlist,
-        })
-    );
-    render(
-        controlsContainers,
-        new FilmCardControl({
-          title: `Mark as watched`,
-          modifier: `mark-as-watched`,
-          isActive: isWatched,
-        })
-    );
+    const CONTROL_PARAMETERS = [
+      {
+        title: `Add to watchlist`,
+        modifier: `add-to-watchlist`,
+        isActive: isInWatchlist,
+      },
+      {
+        title: `Mark as watched`,
+        modifier: `mark-as-watched`,
+        isActive: isWatched,
+      },
+      {
+        title: `Mark as favorite`,
+        modifier: `favorite`,
+        isActive: isFavorite,
+      },
+    ];
 
-    render(
-        controlsContainers,
-        new FilmCardControl({
-          title: `Mark as favorite`,
-          modifier: `favorite`,
-          isActive: isFavorite,
-        })
-    );
+    CONTROL_PARAMETERS.forEach((control) => {
+      render(this._controlsContainer, new FilmCardControl(control));
+    });
   }
 
   _closeMovieDetail() {
@@ -117,26 +113,25 @@ export default class Movie {
 
   _handleWatchListClick() {
     this._changeData(
-        Object.assign({}, this._movie, {
-          isInWatchlist: !this._movie.isFavorite,
-        })
+      Object.assign({}, this._movie, {
+        isInWatchlist: !this._movie.isFavorite,
+      })
     );
   }
 
   _handleWatchedClick() {
     this._changeData(
-        Object.assign({}, this._movie, {
-          isWatched: !this._movie.isFavorite,
-        })
+      Object.assign({}, this._movie, {
+        isWatched: !this._movie.isFavorite,
+      })
     );
   }
 
   _handleFavoriteClick() {
     this._changeData(
-        Object.assign({}, this._movie, {
-          isFavorite: !this._movie.isFavorite,
-        })
+      Object.assign({}, this._movie, {
+        isFavorite: !this._movie.isFavorite,
+      })
     );
   }
 }
-
